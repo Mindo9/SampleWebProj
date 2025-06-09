@@ -17,7 +17,7 @@ public class ChromeDriverManager extends DriverManager {
         chrome_prefs.put("intl.accept_languages", language);
         chrome_prefs.put("profile.default_content_setting_values.geolocation", 2);
         options.setExperimentalOption("prefs", chrome_prefs);
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ltsadmin\\Downloads\\chromedriver-win64\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", System.getProperty("a")+"chromedriver.exe");
         driver = new ChromeDriver();
     }
 }

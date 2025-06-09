@@ -1,0 +1,6 @@
+{
+  "USER_NAME": "id:AppUserUsername",
+  "PASSWORD": "id:AppUserPassword",
+  "BTN_LOGIN": "id:btnSignIn",
+  "LBL_VISIT_GRP": "xpath://h4[contains(text(),'Sẵn sàng cho Thăm Khám')]"
+}

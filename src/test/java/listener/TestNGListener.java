@@ -1,16 +1,12 @@
 package listener;
 
-import com.SWP.config.ConfigSettings;
 import com.SWP.driver.DriverManager;
-import com.SWP.driver.DriverManagerFactory;
-import com.SWP.enums.DriverType;
 import com.SWP.log.LogHelper;
 import com.SWP.utils.keywords.WebKeywords;
 import org.slf4j.Logger;
 import org.testng.ITestNGListener;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 public class TestNGListener implements ITestNGListener {
 
