@@ -8,25 +8,27 @@ import com.VSEE.log.LogHelper;
 import com.VSEE.testNGObject.TestObject;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.text.MessageFormat;
 import java.time.Duration;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 
 public class WebKeywords {
     private static Logger logger = LogHelper.getLogger();
     private ConfigSettings config;
     private WebDriver driver;
-    private static String browser;
+    public String browser;
     private static DriverManager driverManager;
     private static int defaultTimeout;
 
@@ -75,6 +77,22 @@ public class WebKeywords {
             } else {
                 logger.error(MessageFormat
                         .format("Unable to click web element ''{0}'' because the web element is not enable", weId));
+            }
+        } catch (Exception e) {
+            logger.error(MessageFormat.format("Unable to click web element because ''{0}''", e.getMessage()));
+        }
+    }
+
+    public void click(String locator, int... timeout) {
+        try {
+            WebElement we = driver.findElement(By.xpath(locator));
+            if (we.isEnabled()) {
+                logger.info(MessageFormat.format("Clicking web element ''{0}''", locator));
+                we.click();
+                logger.info(MessageFormat.format("Clicked web element ''{0}'' successfully", locator));
+            } else {
+                logger.error(MessageFormat
+                        .format("Unable to click web element ''{0}'' because the web element is not enable", locator));
             }
         } catch (Exception e) {
             logger.error(MessageFormat.format("Unable to click web element because ''{0}''", e.getMessage()));
@@ -299,8 +317,43 @@ public class WebKeywords {
         return false;
     }
 
-    public void switchWindow(String url) {
+    public void switchTab(int windowNumber) {
         WebDriver driver = driverManager.getDriver();
-        driver.switchTo().window(url);
+        ((JavascriptExecutor) driver).executeScript("window.open()");
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(windowNumber));
+    }
+
+    public void newTab(int windowNumber) {
+        WebDriver driver = driverManager.getDriver();
+        ((JavascriptExecutor) driver).executeScript("window.open()");
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(windowNumber));
+    }
+
+    public String getWindowHandle() {
+        WebDriver driver = driverManager.getDriver();
+        logger.info("Getting current window handle");
+        return driver.getWindowHandle();
+    }
+
+    public void switchWindow(String windowHandle) {
+        WebDriver driver = driverManager.getDriver();
+        driver.switchTo().window(windowHandle);
+    }
+
+    public String getCurrentUrl() {
+        WebDriver driver = driverManager.getDriver();
+        waitForPageToLoad();
+        return driver.getCurrentUrl();
+    }
+
+    public void waitForPageToLoad() {
+        WebDriver driver = driverManager.getDriver();
+        driver.
+        new WebDriverWait(driver, Duration.ofSeconds(15)).until(
+                webDriver -> Objects.equals(((JavascriptExecutor) webDriver)
+                        .executeScript("return document.readyState"), "complete"));
+        logger.info("Page loaded successfully");
     }
 }

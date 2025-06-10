@@ -12,10 +12,9 @@ public class DriverManagerFactory {
                 break;
             case FIREFOX:
                 driverManager = new FirefoxDriverManager();
+                break;
             case EDGE:
                 driverManager = new MicrosoftEdgeDriverManager();
-            default:
-                driverManager = new ChromeDriverManager();
                 break;
         }
         return driverManager;

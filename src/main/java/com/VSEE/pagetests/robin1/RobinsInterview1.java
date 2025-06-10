@@ -21,7 +21,7 @@ public class RobinsInterview1 extends Page {
     @Step("Open browser")
     public void openBrowser(){
         action.navigateToUrl(robin_interview1);
-
+        logger.info("Open browser with URL: {}", robin_interview1);
     }
 
     @Step("Enter Waiting Room")
@@ -32,10 +32,5 @@ public class RobinsInterview1 extends Page {
         logger.info("Enter checkbox telemedicine consultation");
         action.click(findWebElement("BTN_ENTER_WROOM"));
         logger.info("Enter waiting room");
-    }
-
-    @Step("Make a call")
-    public void makeACall() {
-        action.click(findWebElement("BTN_CONTINUE_CALL"));
     }
 }
