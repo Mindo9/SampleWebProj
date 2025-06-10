@@ -1,9 +1,0 @@
-{
-  "LBL_FOR_PROVIDERS": "xpath://a[normalize-space()='For Providers']",
-  "USER_NAME": "id:AppUserUsername",
-  "PASSWORD": "id:AppUserPassword",
-  "BTN_LOGIN": "id:btnSignIn",
-  "LBL_GETTING_READY": "xpath://h4[contains(text(),'Getting Ready')]",
-  "BTN_CONTINUE_CALL": "xpath://h3[normalize-space()='Continue on this browser']",
-  "BTN_START_CALL": "xpath://button[normalize-space()='Continue']"
-}

@@ -1,5 +1,0 @@
-{
-  "USER_NAME": "xpath://input[@id='username']",
-  "PASSWORD": "xpath://input[@id='password']",
-  "BTN_LOGIN": "xpath://button[normalize-space()='Log in']"
-}
