@@ -2,6 +2,9 @@ package listener;
 
 import com.VSEE.log.LogHelper;
 import com.VSEE.keywords.WebKeywords;
+import com.VSEE.pagetests.providers.Providers;
+import com.VSEE.pagetests.robin1.RobinsInterview1;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.testng.ITestNGListener;
 import org.testng.annotations.AfterSuite;
@@ -25,13 +28,6 @@ public class TestNGListenerVSEE implements ITestNGListener {
     public void beforeTest() throws Throwable {
         action.openBrowser();
         action.maximizeWindow();
-        logger.info("Before Test");
-
-    }
-
-    @AfterSuite
-    public void afterTest() {
-        action.closeBrowser();
     }
 
 }

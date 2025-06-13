@@ -4,6 +4,7 @@ import com.VSEE.config.ConfigSettings;
 import com.VSEE.driver.DriverManager;
 import com.VSEE.driver.DriverManagerFactory;
 import com.VSEE.enums.DriverType;
+import com.VSEE.helper.WebCommonHelper;
 import com.VSEE.log.LogHelper;
 import com.VSEE.testNGObject.TestObject;
 import io.qameta.allure.Allure;
@@ -18,16 +19,19 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.ByteArrayInputStream;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.util.*;
+import java.util.List;
 import java.util.function.Function;
 
 public class WebKeywords {
     private static Logger logger = LogHelper.getLogger();
     private ConfigSettings config;
-    private WebDriver driver;
+    public WebDriver driver;
     public String browser;
     private static DriverManager driverManager;
     private static int defaultTimeout;
@@ -59,7 +63,7 @@ public class WebKeywords {
     public void closeBrowser() {
         WebDriver driver = driverManager.getDriver();
         logger.info("Closing browser");
-        driver.quit();
+        driver.close();
         logger.info("Close browser successfully");
     }
 
@@ -85,6 +89,7 @@ public class WebKeywords {
 
     public void click(String locator, int... timeout) {
         try {
+            WebDriver driver = driverManager.getDriver();
             WebElement we = driver.findElement(By.xpath(locator));
             if (we.isEnabled()) {
                 logger.info(MessageFormat.format("Clicking web element ''{0}''", locator));
@@ -156,6 +161,7 @@ public class WebKeywords {
                 we.clear();
                 logger.info(MessageFormat.format("Cleared web element ''{0}'' successfully", weId));
                 we.sendKeys(text);
+                we.sendKeys(Keys.ENTER);
                 ;
                 logger.info(MessageFormat.format("Set text ''{0}'' to web element ''{1}'' successfully", text, weId));
             } else {
@@ -344,16 +350,65 @@ public class WebKeywords {
 
     public String getCurrentUrl() {
         WebDriver driver = driverManager.getDriver();
-        waitForPageToLoad();
         return driver.getCurrentUrl();
     }
 
-    public void waitForPageToLoad() {
+    public void hover(String locator){
         WebDriver driver = driverManager.getDriver();
-        driver.
-        new WebDriverWait(driver, Duration.ofSeconds(15)).until(
-                webDriver -> Objects.equals(((JavascriptExecutor) webDriver)
-                        .executeScript("return document.readyState"), "complete"));
-        logger.info("Page loaded successfully");
+        WebElement we = driver.findElement(By.xpath(locator));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(we).perform();
     }
+
+    public void moveByOffSet(int xOff, int yOff){
+        WebDriver driver = driverManager.getDriver();
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(xOff, yOff);
+    }
+
+    public void switchToWindowIndex(Object index) {
+        WebDriver driver = driverManager.getDriver();
+        Set<String> allWindowHandles = driver.getWindowHandles();
+        logger.info("Checking index range");
+        if (index == null) {
+            throw new IllegalArgumentException("Index is null");
+        }
+        boolean switched = false;
+        logger.debug(MessageFormat.format("Switching window with index: ''{0}''", String.valueOf(index)));
+        for (String handle : allWindowHandles) {
+            int indexOfHandle = WebCommonHelper.getIndex(allWindowHandles, handle);
+            if (indexOfHandle == Integer.parseInt(String.valueOf(index))) {
+                try {
+                    driver.switchTo().window(handle); // Switch to the desired window first and then execute
+                    // commands
+                    // using driver
+                } catch (NoSuchWindowException e) {
+                    logger.error(MessageFormat.format("Unable to switch to window with index: ''{0}''", index));
+                }
+                switched = true;
+            }
+        }
+        if (switched) {
+            logger.info(MessageFormat.format("Switched to window with index: ''{0}''", String.valueOf(index)));
+        } else {
+            logger.error(MessageFormat.format("Unable to switch to window with index: ''{0}''", String.valueOf(index)));
+        }
+    }
+
+    public void switchNewWindow(String url) {
+        WebDriver driver = driverManager.getDriver();
+        WebDriver newWindow = driver.switchTo().newWindow(WindowType.WINDOW);
+        newWindow.get(url);
+    }
+
+    public void altTab() throws AWTException, InterruptedException {
+        Robot robot = new Robot();
+        // Simulate ALT+TAB (may cycle only once)
+        robot.keyPress(KeyEvent.VK_ALT);
+        robot.keyPress(KeyEvent.VK_TAB);
+        Thread.sleep(500);
+        robot.keyRelease(KeyEvent.VK_TAB);
+        robot.keyRelease(KeyEvent.VK_ALT);
+    }
+
 }

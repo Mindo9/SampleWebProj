@@ -5,5 +5,6 @@
   "BTN_LOGIN": "id:btnSignIn",
   "LBL_GETTING_READY": "xpath://h4[contains(text(),'Getting Ready')]",
   "BTN_CONTINUE_CALL": "xpath://h3[normalize-space()='Continue on this browser']",
-  "BTN_START_CALL": "xpath://button[normalize-space()='Continue']"
+  "ICON_BOX_CHAT": "id:group-chat",
+  "INBOX_TEXT_CHAT": "xpath://input[@type='textarea']"
 }

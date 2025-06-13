@@ -1,5 +1,7 @@
 {
   "NAME_PROCESS": "id:jsonform-1-elt-first_name",
   "CKB_TELEMEDICINE_CONSULTATION":  "id:jsonform-1-elt-consent",
-  "BTN_ENTER_WROOM": "xpath://input[@value='Enter Waiting Room']"
+  "BTN_ENTER_WROOM": "xpath://input[@value='Enter Waiting Room']",
+  "BTN_CONTINUE_CALL": "xpath://h3[normalize-space()='Continue on this browser']",
+  "BUBBLE_CHAT": "xpath://div[contains(text(),'Are U OK') and @class='webchat-message-bubble']"
 }
