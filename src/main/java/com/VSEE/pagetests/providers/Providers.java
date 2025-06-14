@@ -54,4 +54,10 @@ public class Providers extends Page {
         action.click(findWebElement("ICON_BOX_CHAT"));
         action.setText(findWebElement("INBOX_TEXT_CHAT"), "Are U OK");
     }
+
+    public void endCall(){
+        action.click(findWebElement("BTN_CLOSE_BCHAT"));
+        action.switchToFrame(findWebElement("IFRAME"));
+        action.click(findWebElement("BTN_HANG_UP"));
+    }
 }

@@ -6,5 +6,8 @@
   "LBL_GETTING_READY": "xpath://h4[contains(text(),'Getting Ready')]",
   "BTN_CONTINUE_CALL": "xpath://h3[normalize-space()='Continue on this browser']",
   "ICON_BOX_CHAT": "id:group-chat",
-  "INBOX_TEXT_CHAT": "xpath://input[@type='textarea']"
+  "INBOX_TEXT_CHAT": "xpath://input[@type='textarea']",
+  "BTN_CLOSE_BCHAT": "xpath://button[@class='close closebox']",
+  "IFRAME": "id:jitsiConferenceFrame0",
+  "BTN_HANG_UP": "xpath://div[@class='toolbox-icon   hangup-button']"
 }

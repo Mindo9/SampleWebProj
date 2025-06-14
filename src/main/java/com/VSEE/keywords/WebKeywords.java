@@ -411,4 +411,27 @@ public class WebKeywords {
         robot.keyRelease(KeyEvent.VK_ALT);
     }
 
+    public void switchToFrame(Object locator, int... timeout) {
+        TestObject to = new TestObject();
+        String weId = to.getObjectName();
+        WebElement we = getElement(locator, timeout);
+        WebDriver driver = driverManager.getDriver();
+        try {
+            if (we.isEnabled()) {
+                logger.info(MessageFormat.format("Switch to frame ''{0}''", weId));
+                driver.switchTo().frame(we);
+            } else {
+                logger.error(MessageFormat.format(
+                        "Unable to set switch frame ''{0}''", weId,
+                        weId));
+            }
+        } catch (Exception e) {
+            logger.error(MessageFormat.format("Unable to set switch frame ''{0}'' because ''{1}''",
+                    weId, e.getMessage()));
+        }
+    }
+
+    public void setDriver(WebDriver driver){
+        this.driver = driver;
+    }
 }

@@ -48,9 +48,7 @@ public class RobinsInterview1Test extends TestNGListenerVSEE {
         chromeDriver.findElement(By.xpath("//div[@class='toolbox-icon   hangup-button']")).click();
         Thread.sleep(3000);
         action.altTab();
-        edgeDriver.findElement(By.xpath("//button[@class='close closebox']")).click();
-        edgeDriver.switchTo().frame(edgeDriver.findElement(By.id("jitsiConferenceFrame0")));
-        edgeDriver.findElement(By.xpath("//div[@class='toolbox-icon   hangup-button']")).click();
+        providers.endCall();
         chromeDriver.quit();
         edgeDriver.quit();
     }
